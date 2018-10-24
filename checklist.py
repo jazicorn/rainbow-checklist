@@ -27,13 +27,15 @@ def list_all_items():
         index += 1
 
 
-def mark_completed(index):
+def mark_completed(index, list_item):
     # solution to adding checkmark without error
     # https://stackoverflow.com/questions/16676101/print-the-approval-sign-check-mark-u2713-in-python
     print('√' + "{} {}".format(index, list_item))
+    #checklist[index] = '√' + checklist[index]
+    # print(checklist)
 
 
-def select(function_code):
+def select(function_code, index):
     # Create item
     if function_code == "C":
         input_item = user_input("Input item:")
@@ -41,10 +43,7 @@ def select(function_code):
 
     # Read item
     elif function_code == "R":
-        if user_input("Index Number?") == function_code.isdigit():
-            read(item_index)
-        else:
-            print("Error")
+        read(index)
 
     # Print all items
     elif function_code == "P":
@@ -54,7 +53,20 @@ def select(function_code):
             print("Empty List")
 
     elif function_code == "D":
-        destroy()
+        destroy(index)
+
+    elif function_code == "M":
+        index = len(input(
+            "Using the number paired to the item, which item do you want to check off?\n"))
+        # if index == 0 | index > 1:
+        #print("Error, one number please")
+        # elif index is not index.isdigit():
+        #    print("Error, no letters please")
+        if index == 1:
+            mark_completed(index)
+            print(checklist)
+        else:
+            "unknown error"
 
     elif function_code == "Q":
         return
@@ -108,7 +120,7 @@ def test():
 running = True
 while running:
     selection = user_input(
-        "Press C to add to list, R to Read from list, P to display list, U to update listD to remove list item and Q to quit:\n")
+        "Press C to add to list, R to Read from list, P to display list,\nU to update list, D to remove list item, M to mark item as finished and Q to quit:\n")
     if len(selection) > 1:
         print("can only choose 1 action at a time")
     elif selection.isalpha():
